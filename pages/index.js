@@ -43,8 +43,8 @@ export default function Home({ exploreData, cardData }) {
           content="https://avatars.githubusercontent.com/u/74717766?s=400&u=d17259f0e6d89fe1bd40229395db01aae39a9507&v=4"
         />
         <meta
-          property="og:url"
-          content="https://1919-103-88-216-147.ngrok.io"
+          property="og:description"
+          content="This is a simple Airbnb clone made by me with Nextjs and Tailwind CSS"
         />
       </Head>
       <Header />
