@@ -37,6 +37,15 @@ export default function Home({ exploreData, cardData }) {
     <React.Fragment>
       <Head>
         <title>AirBnB - Clone | NextJs</title>
+        <meta property="og:title" content="Airbnb Clone by Rajat" />
+        <meta
+          property="og:image"
+          content="https://avatars.githubusercontent.com/u/74717766?s=400&u=d17259f0e6d89fe1bd40229395db01aae39a9507&v=4"
+        />
+        <meta
+          property="og:url"
+          content="https://1919-103-88-216-147.ngrok.io"
+        />
       </Head>
       <Header />
       <Banner />
