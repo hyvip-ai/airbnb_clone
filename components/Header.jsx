@@ -8,6 +8,7 @@ import {
   MenuIcon,
   GlobeAltIcon,
   UserCircleIcon,
+  UserIcon,
 } from "@heroicons/react/solid";
 function Header() {
   const [place, setPlace] = useState("");
@@ -15,6 +16,7 @@ function Header() {
     startDate: new Date(),
     endDate: new Date(),
   });
+  const [numberOfGuests, setNumberOfGuests] = useState(1);
   function handleSelect(ranges) {
     setBookingDate((prev) => {
       return {
@@ -23,14 +25,14 @@ function Header() {
       };
     });
   }
-  const selectionRange = useMemo(()=>{
-    console.log("Memo Running")
+  const selectionRange = useMemo(() => {
+    console.log("Memo Running");
     return {
       startDate: bookingDates.startDate,
       endDate: bookingDates.endDate,
       key: "selection",
     };
-  },[bookingDates])
+  }, [bookingDates]);
   useEffect(() => {
     const header = document.querySelector("header");
     const text = document.querySelector(".header-text");
@@ -66,6 +68,7 @@ function Header() {
             onChange={(e) => {
               setPlace(e.target.value);
             }}
+            value={place}
           />
           <SearchIcon className="hidden h-8 mx-2 bg-red-400 text-white rounded-full p-2 cursor-pointer xl:inline-flex" />
         </div>
@@ -77,17 +80,36 @@ function Header() {
             <UserCircleIcon className="h-6" />
           </div>
         </div>
+
+        {place ? (
+          <div className="pt-5 flex flex-col col-span-3 mx-auto bg-white">
+            <DateRangePicker
+              minDate={new Date()}
+              rangeColors={["#FD5B61"]}
+              ranges={[selectionRange]}
+              onChange={handleSelect}
+            />
+            <div className="flex items-center border-b mb-4">
+              <h2 className="text-2xl flex-grow font-semibold">
+                Number of Guests
+              </h2>
+              <UserIcon className="h-5" />
+              <input
+                type="number"
+                className="w-12 pl-2 text-red-400 outline-none"
+                value={numberOfGuests}
+                onChange={(e) => {
+                  setNumberOfGuests(e.target.value);
+                }}
+              />
+            </div>
+            <div className="flex justify-between items-center">
+              <button className="w-2/5 text-gray-600 outline-none rounded-full shadow-md p-2" onClick={()=>{setPlace('')}}>Cancel</button>
+              <button className="w-2/5 text-red-400 outline-none rounded-full shadow-md p-2">Search</button>
+            </div>
+          </div>
+        ) : null}
       </header>
-      {place ? (
-        <div className="pt-[100px] flex justify-center bg-white">
-          <DateRangePicker
-            minDate={new Date()}
-            rangeColors={["#FD5B61"]}
-            ranges={[selectionRange]}
-            onChange={handleSelect}
-          />
-        </div>
-      ) : null}
     </>
   );
 }
