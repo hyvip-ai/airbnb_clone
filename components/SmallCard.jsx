@@ -13,7 +13,6 @@ function SmallCard({ location, image, distace }) {
           objectPosition="left"
           className="rounded-xl"
         />
-        
       </div>
       <div className="w-2/5 text-sm">
         <p>{location}</p>

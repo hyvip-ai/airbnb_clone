@@ -8,7 +8,7 @@ function StayCard({
 }) {
   return (
     <div className="block my-6 p-5 w-full shadow-lg rounded-xl md:flex  bg-white cursor-pointer hover:shadow-2xl transition duration-300 ease-in-out">
-      <div className="relative h-72 w-full md:w-80 md:h-auto">
+      <div className="relative h-72 w-full md:w-80 flex-shrink-0">
         <Image
           src={img}
           alt={title}

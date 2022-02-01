@@ -11,7 +11,7 @@ import {
   UserIcon,
 } from "@heroicons/react/solid";
 import { useRouter } from "next/router";
-function Header({placeholder,showIt}) {
+function Header({ placeholder, showIt }) {
   const router = useRouter();
   const [place, setPlace] = useState("");
   const [bookingDates, setBookingDate] = useState({
@@ -60,7 +60,7 @@ function Header({placeholder,showIt}) {
       text.classList.add("text-white");
       text.classList.remove("text-gray-600");
     }
-  }, [place,showIt]);
+  }, [place, showIt]);
   return (
     <>
       <header className="fixed w-full p-5 z-50 top-0 grid grid-cols-2 transition duration-300 sm:grid-cols-3 md:px-10">

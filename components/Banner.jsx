@@ -1,9 +1,6 @@
 import Image from "next/image";
-import { useRouter } from "next/router";
 import React from "react";
-
 function Banner() {
-  const router = useRouter()
   return (
     <div className="banner flex justify-center items-center relative h-[450px] lg:h-[500px] xl:h-[600px] 2xl:h-[700px]">
       <Image
@@ -14,8 +11,12 @@ function Banner() {
         objectPosition="bottom"
       />
       <div className="absolute text-center">
-        <p className="text-sm font-bold mt-4 sm:text-lg sm:mt-0">Not Sure Where To Go ? Perfect.</p>
-        <button className="text-purple-500 bg-white px-10 py-4 rounded-full shadow-md mt-3 font-bold hover:shadow-xl active:scale-90 transition duration-100" onClick={()=>{router.push("/search")}}>I&apos;m Felxible</button>
+        <p className="text-sm font-bold mt-4 sm:text-lg sm:mt-0">
+          Not Sure Where To Go ? Perfect.
+        </p>
+        <button className="text-purple-500 bg-white px-10 py-4 rounded-full shadow-md mt-3 font-bold hover:shadow-xl active:scale-90 transition duration-100">
+          I&apos;m Felxible
+        </button>
       </div>
     </div>
   );
