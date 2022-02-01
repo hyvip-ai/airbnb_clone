@@ -10,13 +10,27 @@ import {
   UserCircleIcon,
   UserIcon,
 } from "@heroicons/react/solid";
-function Header() {
+import { useRouter } from "next/router";
+function Header({placeholder,showIt}) {
+  const router = useRouter();
   const [place, setPlace] = useState("");
   const [bookingDates, setBookingDate] = useState({
     startDate: new Date(),
     endDate: new Date(),
   });
   const [numberOfGuests, setNumberOfGuests] = useState(1);
+  const searchHandler = () => {
+    console.log(bookingDates.startDate.toISOString());
+    router.push({
+      pathname: "/search",
+      query: {
+        location: place,
+        startDate: bookingDates.startDate.toISOString(),
+        endDate: bookingDates.endDate.toISOString(),
+        numberOfGuests,
+      },
+    });
+  };
   function handleSelect(ranges) {
     setBookingDate((prev) => {
       return {
@@ -26,7 +40,6 @@ function Header() {
     });
   }
   const selectionRange = useMemo(() => {
-    console.log("Memo Running");
     return {
       startDate: bookingDates.startDate,
       endDate: bookingDates.endDate,
@@ -36,7 +49,7 @@ function Header() {
   useEffect(() => {
     const header = document.querySelector("header");
     const text = document.querySelector(".header-text");
-    if (place) {
+    if (place || showIt) {
       header.classList.add("bg-white");
       header.classList.add("shadow-lg");
       text.classList.remove("text-white");
@@ -47,11 +60,16 @@ function Header() {
       text.classList.add("text-white");
       text.classList.remove("text-gray-600");
     }
-  }, [place]);
+  }, [place,showIt]);
   return (
     <>
       <header className="fixed w-full p-5 z-50 top-0 grid grid-cols-2 transition duration-300 sm:grid-cols-3 md:px-10">
-        <div className="relative flex items-center h-10 cursor-pointer">
+        <div
+          className="relative flex items-center h-10 cursor-pointer"
+          onClick={() => {
+            router.push("/");
+          }}
+        >
           <Image
             src={"https://links.papareact.com/qd3"}
             alt="airbnb_logo"
@@ -60,11 +78,11 @@ function Header() {
             objectPosition="left"
           />
         </div>
-        <div className="hidden item-center sm:border-2 rounded-full py-2 sm:flex md:shadow-sm">
+        <div className="hidden item-center md:border-2 rounded-full py-2 sm:flex md:shadow-sm">
           <input
             type="text"
-            placeholder="Start Your Search"
-            className="bg-transparent pl-5 flex-grow outline-none text-gray-600"
+            placeholder={placeholder || "Start Your Search"}
+            className="bg-transparent px-5 flex-grow outline-none text-gray-600"
             onChange={(e) => {
               setPlace(e.target.value);
             }}
@@ -104,8 +122,20 @@ function Header() {
               />
             </div>
             <div className="flex justify-between items-center">
-              <button className="w-2/5 text-gray-600 outline-none rounded-full shadow-md p-2" onClick={()=>{setPlace('')}}>Cancel</button>
-              <button className="w-2/5 text-red-400 outline-none rounded-full shadow-md p-2">Search</button>
+              <button
+                className="w-2/5 text-gray-600 outline-none rounded-full shadow-md p-2"
+                onClick={() => {
+                  setPlace("");
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                className="w-2/5 text-red-400 outline-none rounded-full shadow-md p-2"
+                onClick={searchHandler}
+              >
+                Search
+              </button>
             </div>
           </div>
         ) : null}
