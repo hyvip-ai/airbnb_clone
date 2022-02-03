@@ -1,32 +1,17 @@
 import React, { useState } from "react";
-import ReactMapGL, { Layer, Source } from "react-map-gl";
-function Map() {
+import ReactMapGL, { Layer, Source, Marker, Popup } from "react-map-gl";
+import { getCenter } from "geolib";
+import { LocationMarkerIcon } from "@heroicons/react/solid";
+function Map({ arrayOfCoords, searchResult }) {
+  const center = getCenter(arrayOfCoords);
   const [viewport, setViewport] = useState({
     width: "100%",
     height: "100%",
-    latitude: 37.7577,
-    longitude: -122.4376,
-    zoom: 8,
+    latitude: center.latitude,
+    longitude: center.longitude,
+    zoom: 11,
   });
-  const geojson = {
-    type: "FeatureCollection",
-    features: [
-      {
-        type: "Feature",
-        geometry: { type: "Point", coordinates: [-122.4, 37.8] },
-      },
-    ],
-  };
-
-  const layerStyle = {
-    id: "point",
-    type: "circle",
-    paint: {
-      "circle-radius": 10,
-      "circle-color": "#fb595e",
-    },
-  };
-
+  const [selectedLocation, setSelectedLocation] = React.useState(0);
   return (
     <ReactMapGL
       mapStyle={`mapbox://styles/hyvip-ai/ckz6od9qf002115noa3sgzip2`}
@@ -34,9 +19,38 @@ function Map() {
       onViewportChange={(nextViewport) => setViewport(nextViewport)}
       {...viewport}
     >
-      <Source id="my-data" type="geojson" data={geojson}>
-        <Layer {...layerStyle} />
-      </Source>
+      {searchResult.map((item) => {
+        return (
+          <Marker
+            latitude={item.lat}
+            longitude={item.long}
+            key={item.lat}
+            onClick={() => {
+              setSelectedLocation((prev) => {
+                return {
+                  latitude: item.lat,
+                  longitude: item.long,
+                  name:item.title
+                };
+              });
+            }}
+          >
+            <LocationMarkerIcon className="h-8 text-red-400 cursor-pointer animate-pulse" />
+          </Marker>
+        );
+      })}
+      {selectedLocation ? (
+        <Popup
+          latitude={selectedLocation.latitude}
+          longitude={selectedLocation.longitude}
+          closeButton={true}
+          closeOnClick={false}
+          onClose={() => setSelectedLocation(0)}
+          anchor="bottom"
+        >
+          <div>{selectedLocation.name}</div>
+        </Popup>
+      ) : null}
     </ReactMapGL>
   );
 }

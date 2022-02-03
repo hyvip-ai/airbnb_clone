@@ -9,7 +9,10 @@ import StayCard from "../components/StayCard";
 import Head from "next/head";
 import Map from "../components/Map";
 function Search({ searchResult }) {
-  console.log(searchResult);
+  const arrayOfCoords = searchResult.map((item) => {
+    let newObj = { latitude: item.lat, longitude: item.long };
+    return newObj;
+  });
   const router = useRouter();
   const { location, numberOfGuests, startDate, endDate } = router.query;
   const formatedStartDate = format(new Date(startDate), "dd MMMM yy");
@@ -57,7 +60,7 @@ function Search({ searchResult }) {
           </div>
         </section>
         <section className="hidden xl:inline-flex xl:w-2/5">
-          <Map />
+          <Map arrayOfCoords={arrayOfCoords} searchResult={searchResult}/>
         </section>
       </main>
       <Footer />
