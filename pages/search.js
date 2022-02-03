@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { format } from "date-fns";
 import StayCard from "../components/StayCard";
 import Head from "next/head";
+import Map from "../components/Map";
 function Search({ searchResult }) {
   console.log(searchResult);
   const router = useRouter();
@@ -31,7 +32,7 @@ function Search({ searchResult }) {
       </Head>
       <Header placeholder={placeholder} showIt={true} />
       <main className="flex pt-[105px] px-8 bg-gray-50">
-        <section className="w-full">
+        <section className="w-full xl:w-3/5">
           <p>
             300+ Stays - {range} - for {numberOfGuests} number of guests
           </p>
@@ -54,6 +55,9 @@ function Search({ searchResult }) {
               );
             })}
           </div>
+        </section>
+        <section className="hidden xl:inline-flex xl:w-2/5">
+          <Map />
         </section>
       </main>
       <Footer />
